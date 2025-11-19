@@ -10,6 +10,8 @@ import '../account/favorites_screen.dart';
 import '../account/offers_screen.dart';
 import '../account/trips_history_screen.dart';
 import '../account/wallet_screen.dart';
+import '../more/community_challenges_screen.dart';
+import '../more/journey_moments_screen.dart';
 import '../more/settings_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -82,6 +84,23 @@ class ProfileScreen extends StatelessWidget {
             icon: Icons.emoji_events_outlined,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const AchievementsScreen()),
+            ),
+          ),
+          _ProfileTile(
+            title: 'Journey moments',
+            subtitle: 'Revisit curated AI ride stories',
+            icon: Icons.movie_filter_outlined,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const JourneyMomentsScreen()),
+            ),
+          ),
+          _ProfileTile(
+            title: 'Community challenges',
+            subtitle: 'Crew missions & shared rewards',
+            icon: Icons.groups_3_rounded,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (_) => const CommunityChallengesScreen()),
             ),
           ),
           _ProfileTile(

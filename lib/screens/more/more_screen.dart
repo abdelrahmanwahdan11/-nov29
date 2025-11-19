@@ -4,7 +4,9 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../widgets/glass_card.dart';
 import '../music/music_experience_screen.dart';
+import '../more/community_challenges_screen.dart';
 import '../more/eco_insights_screen.dart';
+import '../more/journey_moments_screen.dart';
 import '../more/labs_screen.dart';
 import '../more/safety_tips_screen.dart';
 import '../more/settings_screen.dart';
@@ -33,6 +35,18 @@ class MoreScreen extends StatelessWidget {
         subtitle: 'Preview future AI upgrades & waitlists',
         icon: Icons.auto_graph_rounded,
         builder: (_) => const LabsScreen(),
+      ),
+      _MoreTile(
+        title: 'Journey moments',
+        subtitle: 'Replay cinematic ride stories & glass stats',
+        icon: Icons.movie_filter_outlined,
+        builder: (_) => const JourneyMomentsScreen(),
+      ),
+      _MoreTile(
+        title: 'Community challenges',
+        subtitle: 'Join crews and unlock holographic badges',
+        icon: Icons.groups_3_rounded,
+        builder: (_) => const CommunityChallengesScreen(),
       ),
       _MoreTile(
         title: 'Safety centre',

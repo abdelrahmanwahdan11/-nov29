@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nex_ride_ai_mobility/data/models/achievement.dart';
+import 'package:nex_ride_ai_mobility/data/models/community_challenge.dart';
+import 'package:nex_ride_ai_mobility/data/models/journey_moment.dart';
 import 'package:nex_ride_ai_mobility/data/models/playlist_track.dart';
 import 'package:nex_ride_ai_mobility/data/models/trip.dart';
 import 'package:nex_ride_ai_mobility/data/models/user.dart';
@@ -224,5 +226,83 @@ final achievements = <Achievement>[
     badgeImageUrl:
         'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&w=300&q=80',
     accent: const Color(0xFFFF6FD8),
+  ),
+];
+
+final journeyMoments = <JourneyMoment>[
+  JourneyMoment(
+    id: 'moment-1',
+    title: 'Sunrise Autonomous Transfer',
+    subtitle: 'Edgewater ➜ Brickell rooftop pad',
+    imageUrl:
+        'https://images.unsplash.com/photo-1469478715127-7c631389bc21?auto=format&fit=crop&w=1400&q=80',
+    metricLabel: 'CO₂ saved',
+    metricValue: '3.4kg',
+    storySegments: const [
+      'Pre-heated cabin ready at 05:20',
+      'Nex-AI rerouted away from port congestion',
+      'Shared playlist synced with co-rider',
+    ],
+    accentColor: const Color(0xFF47E7FF),
+  ),
+  JourneyMoment(
+    id: 'moment-2',
+    title: 'Art Week Concierge',
+    subtitle: 'Wynwood studio loop',
+    imageUrl:
+        'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1400&q=80',
+    metricLabel: 'Studios visited',
+    metricValue: '6 stops',
+    storySegments: const [
+      'Vehicle transformed interior lighting to gallery preset',
+      'One tap share links for each curator drop',
+      'Adaptive suspension cushioned cobblestone alleys',
+    ],
+    accentColor: const Color(0xFFFF6FD8),
+  ),
+  JourneyMoment(
+    id: 'moment-3',
+    title: 'Weekend Island Hop',
+    subtitle: 'Downtown ➜ Key Biscayne',
+    imageUrl:
+        'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1400&q=80',
+    metricLabel: 'Range used',
+    metricValue: '41 km',
+    storySegments: const [
+      'Lounge seats flipped to face the ocean',
+      'Kids mode engaged with holographic travel quiz',
+      'Return trip scheduled automatically after brunch',
+    ],
+    accentColor: const Color(0xFF22C55E),
+  ),
+];
+
+final communityChallenges = <CommunityChallenge>[
+  const CommunityChallenge(
+    id: 'challenge-1',
+    title: 'Glassmorphic Pioneer',
+    description: 'Complete 5 immersive rides with AI ambient lighting enabled.',
+    progress: 3,
+    target: 5,
+    reward: '+300 XP + holographic badge',
+    tagline: '2 rides left to unlock the pioneer capsule.',
+  ),
+  const CommunityChallenge(
+    id: 'challenge-2',
+    title: 'Eco Loop Collective',
+    description: 'Join fellow riders in offsetting 50km of trips this week.',
+    progress: 37,
+    target: 50,
+    reward: 'Tree planting credit',
+    tagline: 'Crew progress updated hourly.',
+  ),
+  const CommunityChallenge(
+    id: 'challenge-3',
+    title: 'Night Pulse Defender',
+    description: 'Keep 3 late rides rated 5 stars for safety & comfort.',
+    progress: 2,
+    target: 3,
+    reward: 'Priority dispatch next Friday',
+    tagline: 'Invite trusted contacts for bonus points.',
   ),
 ];

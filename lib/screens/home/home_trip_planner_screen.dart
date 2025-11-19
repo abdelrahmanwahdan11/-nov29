@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../controllers/controller_scope.dart';
+import '../../data/models/trip.dart';
 import '../../data/models/vehicle.dart';
 import '../../widgets/ai_info_button.dart';
 import '../../widgets/glass_card.dart';
@@ -34,7 +35,7 @@ class _HomeTripPlannerScreenState extends State<HomeTripPlannerScreen> {
   Widget build(BuildContext context) {
     final controllers = ControllerScope.of(context);
     final trip = controllers.trip.activeTrip;
-    final isLoading = controllers.catalog.isLoading;
+    final isLoading = controllers.trip.historyLoading;
     return RefreshIndicator(
       onRefresh: controllers.catalog.refresh,
       child: ListView(
@@ -45,6 +46,8 @@ class _HomeTripPlannerScreenState extends State<HomeTripPlannerScreen> {
           _plannerCard(context),
           const SizedBox(height: 18),
           _quickActionsRow(context),
+          const SizedBox(height: 18),
+          _statusTicker(context, controllers),
           const SizedBox(height: 18),
           if (trip != null) ...[
             Text('Live trip',
@@ -258,6 +261,7 @@ class _HomeTripPlannerScreenState extends State<HomeTripPlannerScreen> {
                   .map((_) => _tripList(
                         isLoading: isLoading,
                         controllers: controllers,
+                        tab: _,
                       ))
                   .toList(),
             ),
@@ -267,7 +271,11 @@ class _HomeTripPlannerScreenState extends State<HomeTripPlannerScreen> {
     );
   }
 
-  Widget _tripList({required bool isLoading, required ControllerScope controllers}) {
+  Widget _tripList({
+    required bool isLoading,
+    required ControllerScope controllers,
+    required String tab,
+  }) {
     if (isLoading) {
       return ListView.separated(
         padding: const EdgeInsets.only(top: 16),
@@ -276,11 +284,109 @@ class _HomeTripPlannerScreenState extends State<HomeTripPlannerScreen> {
         itemCount: 2,
       );
     }
+    final now = DateTime.now();
+    Iterable<Trip> trips = controllers.trip.historyItems;
+    if (tab == 'Upcoming') {
+      trips = trips.where((trip) => trip.scheduledTime.isAfter(now));
+    } else if (tab == 'Active') {
+      trips = trips.where((trip) =>
+          trip.status == 'on_the_way' ||
+          trip.status == 'ready_at_pickup' ||
+          trip.status == 'in_progress');
+    } else {
+      trips = trips.where((trip) => trip.scheduledTime.isBefore(now));
+    }
+    final items = trips.take(4).toList();
+    if (items.isEmpty) {
+      return _emptyTimelineState(tab);
+    }
     return ListView.separated(
       padding: const EdgeInsets.only(top: 16),
-      itemBuilder: (_, index) => TripCard(trip: controllers.trip.activeTrip!),
+      itemBuilder: (_, index) =>
+          TripCard(trip: items[index]).animate().fadeIn().slideX(begin: 0.1),
       separatorBuilder: (_, __) => const SizedBox(height: 12),
-      itemCount: 2,
+      itemCount: items.length,
+    );
+  }
+
+  Widget _emptyTimelineState(String tab) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: GlassCard(
+        margin: const EdgeInsets.only(top: 24),
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.auto_awesome_mosaic_outlined, size: 32),
+            const SizedBox(height: 8),
+            Text('No $tab trips yet',
+                style: const TextStyle(fontWeight: FontWeight.w600)),
+            const SizedBox(height: 4),
+            const Text('Plan a new route to populate this lane.'),
+          ],
+        ),
+      ).animate().fadeIn(),
+    );
+  }
+
+  Widget _statusTicker(BuildContext context, ControllerScope controllers) {
+    const order = [
+      'requested',
+      'on_the_way',
+      'ready_at_pickup',
+      'in_progress',
+      'completed',
+    ];
+    final copy = {
+      'requested': 'Matching your cabin & driver',
+      'on_the_way': 'Vehicle is gliding toward pickup',
+      'ready_at_pickup': 'Car waiting · unlock when ready',
+      'in_progress': 'Enjoying the ride',
+      'completed': 'Trip archived • share recap',
+    };
+    return ValueListenableBuilder<String>(
+      valueListenable: controllers.trip.statusNotifier,
+      builder: (context, status, _) {
+        final idx = order.indexOf(status).clamp(0, order.length - 1);
+        final ratio = idx / (order.length - 1);
+        return ValueListenableBuilder<Duration>(
+          valueListenable: controllers.trip.countdownNotifier,
+          builder: (context, countdown, __) {
+            final minutes = countdown.inMinutes.remainder(60).toString().padLeft(2, '0');
+            final seconds = countdown.inSeconds.remainder(60).toString().padLeft(2, '0');
+            return GlassCard(
+              padding: const EdgeInsets.all(18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.podcasts, color: Theme.of(context).colorScheme.primary),
+                      const SizedBox(width: 10),
+                      Text(status.toUpperCase(),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w700, letterSpacing: 1.1)),
+                      const Spacer(),
+                      Text('$minutes:$seconds'),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(copy[status] ?? 'Monitoring trip',
+                      style: Theme.of(context).textTheme.bodyMedium),
+                  const SizedBox(height: 12),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: LinearProgressIndicator(value: ratio, minHeight: 6)
+                        .animate()
+                        .slideX(begin: -0.2),
+                  ),
+                ],
+              ),
+            ).animate().shimmer(delay: 200.ms, duration: 1400.ms);
+          },
+        );
+      },
     );
   }
 }

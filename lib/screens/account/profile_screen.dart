@@ -9,6 +9,7 @@ import '../account/achievements_screen.dart';
 import '../account/favorites_screen.dart';
 import '../account/loyalty_rewards_screen.dart';
 import '../account/offers_screen.dart';
+import '../account/ride_journal_screen.dart';
 import '../account/trips_history_screen.dart';
 import '../account/wallet_screen.dart';
 import '../account/wellness_screen.dart';
@@ -88,6 +89,14 @@ class ProfileScreen extends StatelessWidget {
             icon: Icons.emoji_events_outlined,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const AchievementsScreen()),
+            ),
+          ),
+          _ProfileTile(
+            title: 'Ride journal',
+            subtitle: 'Log moods, notes & AI nudges',
+            icon: Icons.menu_book_outlined,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const RideJournalScreen()),
             ),
           ),
           _ProfileTile(

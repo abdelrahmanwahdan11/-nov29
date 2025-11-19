@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../widgets/glass_card.dart';
-import '../music/music_experience_screen.dart';
+import '../account/ride_journal_screen.dart';
 import '../more/cabin_modes_screen.dart';
 import '../more/city_pulse_screen.dart';
 import '../more/community_challenges_screen.dart';
 import '../more/eco_insights_screen.dart';
+import '../more/fleet_updates_screen.dart';
 import '../more/journey_moments_screen.dart';
 import '../more/labs_screen.dart';
 import '../more/pulse_forecast_screen.dart';
@@ -15,6 +16,7 @@ import '../more/route_insights_screen.dart';
 import '../more/safety_tips_screen.dart';
 import '../more/settings_screen.dart';
 import '../more/support_screen.dart';
+import '../music/music_experience_screen.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
@@ -41,6 +43,12 @@ class MoreScreen extends StatelessWidget {
         builder: (_) => const PulseForecastScreen(),
       ),
       _MoreTile(
+        title: 'Fleet updates',
+        subtitle: 'Follow new pods, vans and micro-cars',
+        icon: Icons.rocket_launch_outlined,
+        builder: (_) => const FleetUpdatesScreen(),
+      ),
+      _MoreTile(
         title: 'Nex Labs',
         subtitle: 'Preview future AI upgrades & waitlists',
         icon: Icons.auto_graph_rounded,
@@ -51,6 +59,12 @@ class MoreScreen extends StatelessWidget {
         subtitle: 'Replay cinematic ride stories & glass stats',
         icon: Icons.movie_filter_outlined,
         builder: (_) => const JourneyMomentsScreen(),
+      ),
+      _MoreTile(
+        title: 'Ride journal',
+        subtitle: 'Log moods & highlights for every trip',
+        icon: Icons.menu_book_outlined,
+        builder: (_) => const RideJournalScreen(),
       ),
       _MoreTile(
         title: 'Cabin mood studio',

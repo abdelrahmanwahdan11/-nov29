@@ -5,8 +5,10 @@ import 'package:nex_ride_ai_mobility/data/models/city_pulse_story.dart';
 import 'package:nex_ride_ai_mobility/data/models/community_challenge.dart';
 import 'package:nex_ride_ai_mobility/data/models/eco_reward.dart';
 import 'package:nex_ride_ai_mobility/data/models/journey_moment.dart';
+import 'package:nex_ride_ai_mobility/data/models/fleet_update.dart';
 import 'package:nex_ride_ai_mobility/data/models/playlist_track.dart';
 import 'package:nex_ride_ai_mobility/data/models/pulse_forecast.dart';
+import 'package:nex_ride_ai_mobility/data/models/ride_journal_entry.dart';
 import 'package:nex_ride_ai_mobility/data/models/route_insight.dart';
 import 'package:nex_ride_ai_mobility/data/models/trip.dart';
 import 'package:nex_ride_ai_mobility/data/models/user.dart';
@@ -552,5 +554,104 @@ final pulseForecasts = <PulseForecast>[
     tags: const ['Early', 'Range'],
     delayMinutes: -5,
     confidence: 0.9,
+  ),
+];
+
+final rideJournalEntries = <RideJournalEntry>[
+  RideJournalEntry(
+    id: 'journal-1',
+    title: 'Sunrise deck drop-off',
+    route: 'Brickell → Biscayne Harbor',
+    mood: 'Focused + calm',
+    note:
+        'Reviewed tomorrow\'s sprint deck while the cabin dimmed to glacier blue. Driver synced breathing cues to traffic lights.',
+    vehicle: 'Lumine Halo X',
+    timestamp: DateTime.now().subtract(const Duration(hours: 5)),
+    rating: 4.9,
+    tags: const ['Focus', 'Work', 'EV'],
+    highlights: const [
+      'Inbox zero prompt',
+      'Adaptive seat memory saved',
+      'Shared deck exported to teammates',
+    ],
+    accent: const Color(0xFF47E7FF),
+  ),
+  RideJournalEntry(
+    id: 'journal-2',
+    title: 'Crew night pulse',
+    route: 'Wynwood → Little Havana',
+    mood: 'Celebratory energy',
+    note:
+        'Cabin mood synced to friends playlist. AI captured highlight loop + added auto-caption to Journey Moments.',
+    vehicle: 'Aero Pulse GT',
+    timestamp: DateTime.now().subtract(const Duration(days: 1, hours: 2)),
+    rating: 5,
+    tags: const ['Crew', 'Night', 'Celebration'],
+    highlights: const [
+      'Neon confetti finale',
+      'Shared playlist collab',
+      'Bonus aura streak unlocked',
+    ],
+    accent: const Color(0xFFFF6FD8),
+  ),
+  RideJournalEntry(
+    id: 'journal-3',
+    title: 'Sunday recharge loop',
+    route: 'Coral Gables → South Pointe',
+    mood: 'Recovery + warmth',
+    note:
+        'Wellness ritual engaged aromatherapy plus warm light pulses. Ended ride with guided stretch reminders and hydration nudge.',
+    vehicle: 'Cobalt Summit Max',
+    timestamp: DateTime.now().subtract(const Duration(days: 3)),
+    rating: 4.7,
+    tags: const ['Wellness', 'Slow', 'Family'],
+    highlights: const [
+      'Breathing cues saved to journal',
+      'Hydration reminder scheduled',
+      'Driver added scenic detour',
+    ],
+    accent: const Color(0xFF2F6BFF),
+  ),
+];
+
+final fleetUpdates = <FleetUpdate>[
+  FleetUpdate(
+    id: 'fleet-1',
+    title: 'Aurora Pods arrive',
+    subtitle: 'Adaptive lounge interiors',
+    description:
+        'Twelve-seat Aurora Pods start piloting downtown this month. Expect swivel work lounges, holo whiteboards, and per-seat climate bubbles.',
+    imageUrl:
+        'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1200&q=80',
+    status: 'Piloting now',
+    eta: 'Wave 1 • Oct 12',
+    chips: const ['Workspace', '12 seats', 'Beta'],
+    gradient: const [Color(0xFF2F6BFF), Color(0xFF47E7FF)],
+  ),
+  FleetUpdate(
+    id: 'fleet-2',
+    title: 'Solstice micro-cars',
+    subtitle: 'Nano footprint for dense cores',
+    description:
+        'Two-seat autonomous pods with sliding doors designed for heritage alleys. Includes curb-friendly wheels + solar skins.',
+    imageUrl:
+        'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=1200&q=80',
+    status: 'Design freeze',
+    eta: 'Wave 2 • Nov 05',
+    chips: const ['2 seats', 'Solar', 'Auto'],
+    gradient: const [Color(0xFFFF6FD8), Color(0xFFFFA14E)],
+  ),
+  FleetUpdate(
+    id: 'fleet-3',
+    title: 'Glide cargo vans',
+    subtitle: 'Creator + crew ready',
+    description:
+        'Cargo-ready vans refitted with modular walls. Perfect for moving pop-up studios, stage gear, or wellness events.',
+    imageUrl:
+        'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80',
+    status: 'Tooling underway',
+    eta: 'Wave 3 • Dec 14',
+    chips: const ['Cargo', 'Modular', 'Events'],
+    gradient: const [Color(0xFF22C55E), Color(0xFF7B61FF)],
   ),
 ];

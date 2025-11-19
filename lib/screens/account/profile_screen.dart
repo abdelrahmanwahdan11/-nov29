@@ -10,6 +10,7 @@ import '../account/favorites_screen.dart';
 import '../account/offers_screen.dart';
 import '../account/trips_history_screen.dart';
 import '../account/wallet_screen.dart';
+import '../account/wellness_screen.dart';
 import '../more/community_challenges_screen.dart';
 import '../more/journey_moments_screen.dart';
 import '../more/settings_screen.dart';
@@ -101,6 +102,14 @@ class ProfileScreen extends StatelessWidget {
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(
                   builder: (_) => const CommunityChallengesScreen()),
+            ),
+          ),
+          _ProfileTile(
+            title: 'Ride wellness',
+            subtitle: 'Mindful modes & cabin rituals',
+            icon: Icons.self_improvement,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const WellnessScreen()),
             ),
           ),
           _ProfileTile(

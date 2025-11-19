@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../widgets/glass_card.dart';
 import '../music/music_experience_screen.dart';
+import '../more/city_pulse_screen.dart';
 import '../more/community_challenges_screen.dart';
 import '../more/eco_insights_screen.dart';
 import '../more/journey_moments_screen.dart';
@@ -41,6 +42,12 @@ class MoreScreen extends StatelessWidget {
         subtitle: 'Replay cinematic ride stories & glass stats',
         icon: Icons.movie_filter_outlined,
         builder: (_) => const JourneyMomentsScreen(),
+      ),
+      _MoreTile(
+        title: 'City pulse',
+        subtitle: 'Live infrastructure briefings & detours',
+        icon: Icons.podcasts_rounded,
+        builder: (_) => const CityPulseScreen(),
       ),
       _MoreTile(
         title: 'Community challenges',

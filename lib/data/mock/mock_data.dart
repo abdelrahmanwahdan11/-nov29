@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nex_ride_ai_mobility/data/models/achievement.dart';
+import 'package:nex_ride_ai_mobility/data/models/city_pulse_story.dart';
 import 'package:nex_ride_ai_mobility/data/models/community_challenge.dart';
 import 'package:nex_ride_ai_mobility/data/models/journey_moment.dart';
 import 'package:nex_ride_ai_mobility/data/models/playlist_track.dart';
 import 'package:nex_ride_ai_mobility/data/models/trip.dart';
 import 'package:nex_ride_ai_mobility/data/models/user.dart';
 import 'package:nex_ride_ai_mobility/data/models/vehicle.dart';
+import 'package:nex_ride_ai_mobility/data/models/wellness_metric.dart';
 
 final demoUser = User(
   id: 'user-1',
@@ -196,6 +198,68 @@ final playlist = <PlaylistTrack>[
     durationSec: 204,
     coverImageUrl:
         'https://images.unsplash.com/photo-1469478715127-7c631389bc21?auto=format&fit=crop&w=400&q=80',
+  ),
+];
+
+final cityPulseStories = <CityPulseStory>[
+  CityPulseStory(
+    id: 'pulse-1',
+    title: 'Hyperloop trial paused at Midtown portal',
+    description:
+        'Maintenance crews are recalibrating the magnetic runways. Alternate EV caravans will handle premium transfers.',
+    tag: 'Mobility lab',
+    imageUrl:
+        'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1200&q=80',
+    publishedAt: DateTime.now().subtract(const Duration(hours: 3)),
+    highlight: 'Expect 4 min detours for airport rides',
+  ),
+  CityPulseStory(
+    id: 'pulse-2',
+    title: 'SeaGlass avenue converted to bike-first boulevard',
+    description:
+        'City sensors detected a 42% drop in air particles since the pilot. NexRide EVs glide at limited speed to blend in.',
+    tag: 'City climate',
+    imageUrl:
+        'https://images.unsplash.com/photo-1469478715127-7c631389bc21?auto=format&fit=crop&w=1200&q=80',
+    publishedAt: DateTime.now().subtract(const Duration(hours: 9)),
+    highlight: 'Earn double eco points along the corridor',
+  ),
+  CityPulseStory(
+    id: 'pulse-3',
+    title: 'NexRide holo-stations test adaptive lighting',
+    description:
+        'New platform domes shift hues based on rider mood boards. Beta testers can opt-in via Labs > Sense Grid.',
+    tag: 'Labs',
+    imageUrl:
+        'https://images.unsplash.com/photo-1500534314215-6c8c8e9c90f4?auto=format&fit=crop&w=1200&q=80',
+    publishedAt: DateTime.now().subtract(const Duration(hours: 20)),
+  ),
+];
+
+final wellnessMetrics = <WellnessMetric>[
+  const WellnessMetric(
+    id: 'well-1',
+    label: 'Calm minutes',
+    value: 126,
+    unit: 'min',
+    trend: 12,
+    description: 'Guided breathing & adaptive cabin light kept you relaxed.',
+  ),
+  const WellnessMetric(
+    id: 'well-2',
+    label: 'Focus streak',
+    value: 4,
+    unit: 'days',
+    trend: 8,
+    description: 'Quiet cabin preset engaged for four consecutive work rides.',
+  ),
+  const WellnessMetric(
+    id: 'well-3',
+    label: 'Hydration nudges',
+    value: 9,
+    unit: 'tips',
+    trend: -4,
+    description: 'Try enabling auto-reminder for long trips to boost this stat.',
   ),
 ];
 

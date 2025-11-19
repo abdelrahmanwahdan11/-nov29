@@ -5,9 +5,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../../widgets/glass_card.dart';
 import '../account/ride_journal_screen.dart';
 import '../more/cabin_modes_screen.dart';
+import '../more/charge_radar_screen.dart';
 import '../more/city_pulse_screen.dart';
 import '../more/community_challenges_screen.dart';
 import '../more/eco_insights_screen.dart';
+import '../more/event_spotlights_screen.dart';
 import '../more/fleet_updates_screen.dart';
 import '../more/journey_moments_screen.dart';
 import '../more/labs_screen.dart';
@@ -35,6 +37,12 @@ class MoreScreen extends StatelessWidget {
         subtitle: 'See how NexRide offsets your rides',
         icon: Icons.eco_outlined,
         builder: (_) => const EcoInsightsScreen(),
+      ),
+      _MoreTile(
+        title: 'Charge radar',
+        subtitle: 'Monitor pods and instant slots',
+        icon: Icons.ev_station,
+        builder: (_) => const ChargeRadarScreen(),
       ),
       _MoreTile(
         title: 'Pulse forecasts',
@@ -77,6 +85,12 @@ class MoreScreen extends StatelessWidget {
         subtitle: 'Optimal windows & eco suggestions',
         icon: Icons.route,
         builder: (_) => const RouteInsightsScreen(),
+      ),
+      _MoreTile(
+        title: 'Event spotlights',
+        subtitle: 'Plan around pop-ups & congresses',
+        icon: Icons.event,
+        builder: (_) => const EventSpotlightsScreen(),
       ),
       _MoreTile(
         title: 'City pulse',

@@ -15,6 +15,8 @@ import '../account/wallet_screen.dart';
 import '../account/wellness_screen.dart';
 import '../more/cabin_modes_screen.dart';
 import '../more/community_challenges_screen.dart';
+import '../more/charge_radar_screen.dart';
+import '../more/event_spotlights_screen.dart';
 import '../more/journey_moments_screen.dart';
 import '../more/pulse_forecast_screen.dart';
 import '../more/settings_screen.dart';
@@ -130,6 +132,22 @@ class ProfileScreen extends StatelessWidget {
             icon: Icons.auto_awesome_mosaic,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const PulseForecastScreen()),
+            ),
+          ),
+          _ProfileTile(
+            title: 'Charge radar',
+            subtitle: 'EV pods & instant slots',
+            icon: Icons.ev_station,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const ChargeRadarScreen()),
+            ),
+          ),
+          _ProfileTile(
+            title: 'Event spotlights',
+            subtitle: 'Plan around city happenings',
+            icon: Icons.event,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const EventSpotlightsScreen()),
             ),
           ),
           _ProfileTile(

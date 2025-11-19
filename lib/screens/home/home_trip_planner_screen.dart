@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../controllers/controller_scope.dart';
+import '../../data/mock/mock_data.dart';
 import '../../data/models/trip.dart';
 import '../../data/models/vehicle.dart';
 import '../../widgets/ai_info_button.dart';
@@ -11,6 +12,8 @@ import '../../widgets/primary_button.dart';
 import '../../widgets/skeleton_loader.dart';
 import '../../widgets/stat_pill.dart';
 import '../../widgets/trip_card.dart';
+import '../more/charge_radar_screen.dart';
+import '../more/event_spotlights_screen.dart';
 import '../trip/trip_planning_screen.dart';
 
 class HomeTripPlannerScreen extends StatefulWidget {
@@ -66,6 +69,8 @@ class _HomeTripPlannerScreenState extends State<HomeTripPlannerScreen> {
           _statsRow(context, controllers),
           const SizedBox(height: 18),
           _timelineTabs(isLoading, controllers),
+          const SizedBox(height: 24),
+          _citySignalsSection(context),
         ],
       ),
     );
@@ -271,6 +276,68 @@ class _HomeTripPlannerScreenState extends State<HomeTripPlannerScreen> {
     );
   }
 
+  Widget _citySignalsSection(BuildContext context) {
+    if (eventSpotlights.isEmpty || chargeSpots.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    final event = eventSpotlights.first;
+    final spot = chargeSpots.first;
+    final isWide = MediaQuery.of(context).size.width > 640;
+    final cards = <Widget>[
+      _SignalCard(
+        title: event.title,
+        subtitle: event.highlight,
+        meta: '${event.venue} · ${event.chips.first}',
+        imageUrl: event.heroImageUrl,
+        icon: Icons.event,
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const EventSpotlightsScreen()),
+        ),
+      ),
+      _SignalCard(
+        title: spot.name,
+        subtitle: spot.status,
+        meta: '${spot.availablePods}/${spot.totalPods} pods free',
+        imageUrl: spot.imageUrl,
+        icon: Icons.ev_station,
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const ChargeRadarScreen()),
+        ),
+      ),
+    ];
+    final list = isWide
+        ? Row(
+            children: [
+              for (int i = 0; i < cards.length; i++) ...[
+                Expanded(child: cards[i]),
+                if (i != cards.length - 1) const SizedBox(width: 12),
+              ],
+            ],
+          )
+        : Column(
+            children: [
+              for (int i = 0; i < cards.length; i++) ...[
+                cards[i],
+                if (i != cards.length - 1) const SizedBox(height: 12),
+              ],
+            ],
+          );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('City signals',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(fontWeight: FontWeight.bold))
+            .animate()
+            .fadeIn(),
+        const SizedBox(height: 12),
+        list,
+      ],
+    );
+  }
+
   Widget _tripList({
     required bool isLoading,
     required ControllerScope controllers,
@@ -404,6 +471,82 @@ class _LocationRow extends StatelessWidget {
         Text(label, style: Theme.of(context).textTheme.bodyMedium),
         Text(value, style: const TextStyle(fontWeight: FontWeight.w600)),
       ],
+    );
+  }
+}
+
+class _SignalCard extends StatelessWidget {
+  const _SignalCard({
+    required this.title,
+    required this.subtitle,
+    required this.meta,
+    required this.imageUrl,
+    required this.icon,
+    required this.onTap,
+  });
+
+  final String title;
+  final String subtitle;
+  final String meta;
+  final String imageUrl;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: GlassCard(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(18),
+              child: Image.network(
+                imageUrl,
+                height: 110,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ).animate().fadeIn(),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Icon(icon, size: 18),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 15)),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(subtitle,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodySmall),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Icon(Icons.chevron_right,
+                    color: Theme.of(context).colorScheme.primary),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(meta,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(fontWeight: FontWeight.w600)),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ).animate().slideY(begin: 0.15).fadeIn(),
     );
   }
 }

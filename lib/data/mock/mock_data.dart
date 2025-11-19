@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nex_ride_ai_mobility/data/models/achievement.dart';
 import 'package:nex_ride_ai_mobility/data/models/cabin_mood.dart';
+import 'package:nex_ride_ai_mobility/data/models/charge_spot.dart';
 import 'package:nex_ride_ai_mobility/data/models/city_pulse_story.dart';
 import 'package:nex_ride_ai_mobility/data/models/community_challenge.dart';
 import 'package:nex_ride_ai_mobility/data/models/eco_reward.dart';
+import 'package:nex_ride_ai_mobility/data/models/event_spotlight.dart';
 import 'package:nex_ride_ai_mobility/data/models/journey_moment.dart';
 import 'package:nex_ride_ai_mobility/data/models/fleet_update.dart';
 import 'package:nex_ride_ai_mobility/data/models/playlist_track.dart';
@@ -653,5 +655,98 @@ final fleetUpdates = <FleetUpdate>[
     eta: 'Wave 3 • Dec 14',
     chips: const ['Cargo', 'Modular', 'Events'],
     gradient: const [Color(0xFF22C55E), Color(0xFF7B61FF)],
+  ),
+];
+
+final chargeSpots = <ChargeSpot>[
+  const ChargeSpot(
+    id: 'charge-1',
+    name: 'Solar Grove Hub',
+    neighborhood: 'Brickell',
+    imageUrl:
+        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80',
+    status: 'Flowing',
+    availablePods: 6,
+    totalPods: 12,
+    powerKw: 350,
+    waitMinutes: 4,
+    energyType: 'Solar blend',
+    amenities: const ['Lounge', 'Cafe', 'AR wall'],
+    lastUpdated: 'Refreshed 2 min ago',
+  ),
+  const ChargeSpot(
+    id: 'charge-2',
+    name: 'Harbor Stack',
+    neighborhood: 'Edgewater Marina',
+    imageUrl:
+        'https://images.unsplash.com/photo-1469478715127-7c631389bc21?auto=format&fit=crop&w=1200&q=80',
+    status: 'Peak wave',
+    availablePods: 2,
+    totalPods: 10,
+    powerKw: 425,
+    waitMinutes: 11,
+    energyType: 'Tidal boost',
+    amenities: const ['Boardwalk', 'Wellness pods'],
+    lastUpdated: 'Synced 6 min ago',
+  ),
+  const ChargeSpot(
+    id: 'charge-3',
+    name: 'Sky Garden Deck',
+    neighborhood: 'Midtown Roof',
+    imageUrl:
+        'https://images.unsplash.com/photo-1493238792000-8113da705763?auto=format&fit=crop&w=1200&q=80',
+    status: 'Plenty of space',
+    availablePods: 9,
+    totalPods: 14,
+    powerKw: 300,
+    waitMinutes: 2,
+    energyType: 'Wind + grid',
+    amenities: const ['Workspace', 'Garden deck'],
+    lastUpdated: 'Synced 1 min ago',
+  ),
+];
+
+final eventSpotlights = <EventSpotlight>[
+  EventSpotlight(
+    id: 'event-1',
+    title: 'Neon Regatta Arrival',
+    description:
+        'Harbor drone show welcomes visiting founders. Expect show-mode lighting cues when driving by the bay.',
+    dateTime: DateTime.now().add(const Duration(days: 1, hours: 3)),
+    venue: 'Pier 14 SkyDeck',
+    category: 'Culture',
+    heroImageUrl:
+        'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?auto=format&fit=crop&w=1400&q=80',
+    highlight: 'Earn double aura points for eco arrivals',
+    vibe: 'Sky lantern palette',
+    chips: const ['Harbor', 'Night', 'Drone show'],
+  ),
+  EventSpotlight(
+    id: 'event-2',
+    title: 'Future Mobility Congress',
+    description:
+        'Global speakers take over the Wynwood campus. Expect guest dispatch lanes & longer dwell times.',
+    dateTime: DateTime.now().add(const Duration(days: 4)),
+    venue: 'Wynwood Innovation Dome',
+    category: 'Business',
+    heroImageUrl:
+        'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1400&q=80',
+    highlight: 'Shuttles depart every 7 min',
+    vibe: 'Polished glass summit',
+    chips: const ['Conference', 'Wynwood', 'VIP'],
+  ),
+  EventSpotlight(
+    id: 'event-3',
+    title: 'Sunset Sound Bath',
+    description:
+        'Community wellness collective hosts a 200-person sound bath on the Baywalk. Expect road closures nearby.',
+    dateTime: DateTime.now().add(const Duration(days: 2, hours: 5)),
+    venue: 'Baywalk Amphitheater',
+    category: 'Wellness',
+    heroImageUrl:
+        'https://images.unsplash.com/photo-1469478715127-7c631389bc21?auto=format&fit=crop&w=1400&q=80',
+    highlight: 'Switch to Calm preset before arrival',
+    vibe: 'Soft amber horizon',
+    chips: const ['Wellness', 'Sunset', 'Community'],
   ),
 ];

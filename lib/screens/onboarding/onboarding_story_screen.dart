@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../controllers/controller_scope.dart';
+import '../../widgets/glass_card.dart';
 import '../../widgets/primary_button.dart';
-import '../shell/home_shell.dart';
+import '../auth/auth_gateway_screen.dart';
 
 class OnboardingStoryScreen extends StatefulWidget {
   const OnboardingStoryScreen({super.key});
@@ -65,17 +67,28 @@ class _OnboardingStoryScreenState extends State<OnboardingStoryScreen> {
     await prefs.setBool('seen_onboarding', true);
     if (!mounted) return;
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const HomeShell()),
+      MaterialPageRoute(builder: (_) => const AuthGatewayScreen()),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final scope = ControllerScope.of(context);
+    final theme = scope.theme;
+    final localization = scope.localization;
     final colors = Theme.of(context).colorScheme;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
         children: [
+          Positioned(
+            top: 40,
+            right: 16,
+            child: TextButton(
+              onPressed: _complete,
+              child: const Text('Skip'),
+            ),
+          ),
           PageView.builder(
             controller: _controller,
             onPageChanged: (value) => setState(() => _index = value),
@@ -142,19 +155,85 @@ class _OnboardingStoryScreenState extends State<OnboardingStoryScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
+                AnimatedSwitcher(
+                  duration: 300.ms,
+                  child: _index == _stories.length - 1
+                      ? GlassCard(
+                          key: const ValueKey('prefs'),
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Preview interface'),
+                              const SizedBox(height: 8),
+                              Wrap(
+                                spacing: 8,
+                                children: [
+                                  ChoiceChip(
+                                    label: const Text('English'),
+                                    selected:
+                                        localization.locale.languageCode == 'en',
+                                    onSelected: (_) => localization
+                                        .setLocale(const Locale('en', 'US')),
+                                  ),
+                                  ChoiceChip(
+                                    label: const Text('العربية'),
+                                    selected:
+                                        localization.locale.languageCode == 'ar',
+                                    onSelected: (_) => localization
+                                        .setLocale(const Locale('ar', 'PS')),
+                                  ),
+                                ],
+                              ),
+                              SwitchListTile(
+                                value: theme.mode == ThemeMode.dark,
+                                onChanged: (value) => theme
+                                    .updateMode(value ? ThemeMode.dark : ThemeMode.light),
+                                title: const Text('Dark mode preview'),
+                              ),
+                            ],
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        if (_index > 0) {
+                          _controller.previousPage(
+                              duration: const Duration(milliseconds: 400),
+                              curve: Curves.easeInOut);
+                        } else {
+                          _complete();
+                        }
+                      },
+                      child: const Text('Back'),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: PrimaryButton(
+                        label: _index == _stories.length - 1
+                            ? 'Get started'
+                            : 'Next',
+                        onPressed: () {
+                          if (_index == _stories.length - 1) {
+                            _complete();
+                          } else {
+                            _controller.nextPage(
+                                duration: const Duration(milliseconds: 400),
+                                curve: Curves.easeInOut);
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
                 PrimaryButton(
-                  label: _index == _stories.length - 1
-                      ? 'Get started'
-                      : 'Next',
-                  onPressed: () {
-                    if (_index == _stories.length - 1) {
-                      _complete();
-                    } else {
-                      _controller.nextPage(
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut);
-                    }
-                  },
+                  label: 'Continue as guest',
+                  onPressed: _complete,
                 ),
               ],
             ).animate().fadeIn(duration: 400.ms),

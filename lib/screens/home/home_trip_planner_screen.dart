@@ -6,9 +6,11 @@ import '../../controllers/controller_scope.dart';
 import '../../data/models/vehicle.dart';
 import '../../widgets/ai_info_button.dart';
 import '../../widgets/glass_card.dart';
+import '../../widgets/primary_button.dart';
 import '../../widgets/skeleton_loader.dart';
 import '../../widgets/stat_pill.dart';
 import '../../widgets/trip_card.dart';
+import '../trip/trip_planning_screen.dart';
 
 class HomeTripPlannerScreen extends StatefulWidget {
   const HomeTripPlannerScreen({super.key});
@@ -127,6 +129,13 @@ class _HomeTripPlannerScreenState extends State<HomeTripPlannerScreen> {
               SizedBox(width: 8),
               Text('Car waits 5 min + 2 min walk'),
             ],
+          ),
+          const SizedBox(height: 16),
+          PrimaryButton(
+            label: 'Open trip planner',
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const TripPlanningScreen()),
+            ),
           ),
         ],
       ),

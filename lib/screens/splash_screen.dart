@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/controller_scope.dart';
+import 'auth/auth_gateway_screen.dart';
 import 'onboarding/onboarding_story_screen.dart';
 import 'shell/home_shell.dart';
 
@@ -27,19 +28,14 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future<void>.delayed(const Duration(milliseconds: 1400));
     if (!mounted) return;
     final auth = ControllerScope.of(context).auth;
-    if (auth.isLoggedIn && seen) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const HomeShell()),
-      );
-    } else if (seen) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const HomeShell()),
-      );
-    } else {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const OnboardingStoryScreen()),
-      );
-    }
+    final destination = !seen
+        ? const OnboardingStoryScreen()
+        : auth.isLoggedIn
+            ? const HomeShell()
+            : const AuthGatewayScreen();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => destination),
+    );
   }
 
   @override

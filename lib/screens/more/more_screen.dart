@@ -1,9 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../widgets/glass_card.dart';
 import '../music/music_experience_screen.dart';
 import '../more/eco_insights_screen.dart';
+import '../more/labs_screen.dart';
 import '../more/safety_tips_screen.dart';
 import '../more/settings_screen.dart';
 import '../more/support_screen.dart';
@@ -25,6 +27,12 @@ class MoreScreen extends StatelessWidget {
         subtitle: 'See how NexRide offsets your rides',
         icon: Icons.eco_outlined,
         builder: (_) => const EcoInsightsScreen(),
+      ),
+      _MoreTile(
+        title: 'Nex Labs',
+        subtitle: 'Preview future AI upgrades & waitlists',
+        icon: Icons.auto_graph_rounded,
+        builder: (_) => const LabsScreen(),
       ),
       _MoreTile(
         title: 'Safety centre',
@@ -65,19 +73,23 @@ class MoreScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(tile.title,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(fontWeight: FontWeight.bold)),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(fontWeight: FontWeight.bold))
+                          .animate()
+                          .fadeIn(),
                       Text(tile.subtitle,
-                          style: Theme.of(context).textTheme.bodySmall),
+                              style: Theme.of(context).textTheme.bodySmall)
+                          .animate()
+                          .slideX(begin: 0.1),
                     ],
                   ),
                 ),
                 const Icon(Icons.chevron_right),
               ],
             ),
-          ),
+          ).animate().scale(begin: 0.97, duration: 300.ms),
         );
       },
     );

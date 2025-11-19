@@ -6,27 +6,57 @@ import '../data/models/vehicle.dart';
 
 class SearchController extends ChangeNotifier {
   final List<String> recent = [];
-  List<dynamic> results = [];
+  final List<String> suggestions = const [
+    'AI comfort ride',
+    'Airport pickup',
+    'Electric SUV',
+  ];
+  final List<String> favoriteLocations = const [
+    'Downtown HQ plaza',
+    'Key Biscayne marina',
+    'Little Havana studio',
+  ];
+
+  List<Vehicle> vehicleResults = [];
+  List<Trip> tripResults = [];
+  List<String> locationResults = [];
+  bool get hasResults =>
+      vehicleResults.isNotEmpty ||
+      tripResults.isNotEmpty ||
+      locationResults.isNotEmpty;
 
   void search(String query) {
-    if (query.isEmpty) {
-      results = [];
-      notifyListeners();
+    final trimmed = query.trim();
+    if (trimmed.isEmpty) {
+      clear();
       return;
     }
-    final lower = query.toLowerCase();
-    final vehiclesMatches = vehicles.where((vehicle) =>
-        vehicle.brand.toLowerCase().contains(lower) ||
-        vehicle.model.toLowerCase().contains(lower) ||
-        vehicle.category.toLowerCase().contains(lower));
-    final tripsMatches = trips.where((Trip trip) =>
-        trip.pickupLocation.toLowerCase().contains(lower) ||
-        trip.dropoffLocation.toLowerCase().contains(lower));
-    results = [...vehiclesMatches, ...tripsMatches];
+    final lower = trimmed.toLowerCase();
+    vehicleResults = vehicles
+        .where((vehicle) =>
+            vehicle.brand.toLowerCase().contains(lower) ||
+            vehicle.model.toLowerCase().contains(lower) ||
+            vehicle.category.toLowerCase().contains(lower))
+        .toList();
+    tripResults = trips
+        .where((Trip trip) =>
+            trip.pickupLocation.toLowerCase().contains(lower) ||
+            trip.dropoffLocation.toLowerCase().contains(lower))
+        .toList();
+    locationResults = favoriteLocations
+        .where((place) => place.toLowerCase().contains(lower))
+        .toList();
     if (recent.length > 6) recent.removeAt(0);
-    if (query.isNotEmpty && !recent.contains(query)) {
-      recent.add(query);
+    if (trimmed.isNotEmpty && !recent.contains(trimmed)) {
+      recent.add(trimmed);
     }
+    notifyListeners();
+  }
+
+  void clear() {
+    vehicleResults = [];
+    tripResults = [];
+    locationResults = [];
     notifyListeners();
   }
 }

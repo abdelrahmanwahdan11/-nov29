@@ -9,8 +9,11 @@ class TripController extends ChangeNotifier {
   Trip? _activeTrip = trips.first;
   Trip? get activeTrip => _activeTrip;
   Timer? _timer;
+  Timer? _countdownTimer;
   final ValueNotifier<String> statusNotifier =
       ValueNotifier<String>(trips.first.status);
+  final ValueNotifier<Duration> countdownNotifier =
+      ValueNotifier<Duration>(Duration.zero);
 
   final List<Trip> _historySource =
       List<Trip>.from(trips)..sort((a, b) => b.startTime.compareTo(a.startTime));
@@ -91,6 +94,7 @@ class TripController extends ChangeNotifier {
 
   void startSimulation() {
     _timer?.cancel();
+    _countdownTimer?.cancel();
     final states = [
       'requested',
       'on_the_way',
@@ -99,6 +103,7 @@ class TripController extends ChangeNotifier {
       'completed',
     ];
     var index = 0;
+    countdownNotifier.value = _computeCountdown();
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       if (index >= states.length) {
         timer.cancel();
@@ -106,15 +111,29 @@ class TripController extends ChangeNotifier {
       }
       statusNotifier.value = states[index];
       _activeTrip = _activeTrip?.copyWith(status: states[index]);
+      countdownNotifier.value = _computeCountdown();
       index++;
       notifyListeners();
     });
+    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      countdownNotifier.value = _computeCountdown();
+    });
+  }
+
+  Duration _computeCountdown() {
+    if (_activeTrip == null) return Duration.zero;
+    final now = DateTime.now();
+    final pickup = _activeTrip!.scheduledTime;
+    if (pickup.isBefore(now)) return Duration.zero;
+    return pickup.difference(now);
   }
 
   @override
   void dispose() {
     _timer?.cancel();
+    _countdownTimer?.cancel();
     statusNotifier.dispose();
+    countdownNotifier.dispose();
     super.dispose();
   }
 }

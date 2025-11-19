@@ -1,6 +1,9 @@
 
 import 'package:flutter/material.dart';
 
+import '../../widgets/glass_card.dart';
+import '../../widgets/primary_button.dart';
+
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
@@ -18,13 +21,22 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
+            const Text(
+              'We will send a simulated reset link to your inbox. Because the app is offline-only, the link is for demo purposes.',
             ),
             const SizedBox(height: 12),
-            ElevatedButton(
+            GlassCard(
+              padding: const EdgeInsets.all(16),
+              child: TextField(
+                controller: _emailController,
+                decoration: const InputDecoration(labelText: 'Email'),
+              ),
+            ),
+            const SizedBox(height: 20),
+            PrimaryButton(
+              label: 'Send reset link',
               onPressed: () {
                 showDialog(
                   context: context,
@@ -41,7 +53,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                 );
               },
-              child: const Text('Send reset link'),
             ),
           ],
         ),

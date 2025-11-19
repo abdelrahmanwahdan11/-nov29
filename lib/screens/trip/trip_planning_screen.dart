@@ -1,39 +1,222 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../widgets/ai_info_button.dart';
 import '../../widgets/glass_card.dart';
+import '../../widgets/primary_button.dart';
 
-class TripPlanningScreen extends StatelessWidget {
+class TripPlanningScreen extends StatefulWidget {
   const TripPlanningScreen({super.key});
 
   @override
+  State<TripPlanningScreen> createState() => _TripPlanningScreenState();
+}
+
+class _TripPlanningScreenState extends State<TripPlanningScreen> {
+  final pickupController = TextEditingController(text: 'Downtown HQ');
+  final dropoffController = TextEditingController(text: 'Airport T3');
+  final notesController = TextEditingController();
+  final slots = const ['Now', '15 min', '45 min', 'Tonight'];
+  int selectedSlot = 1;
+  int selectedCard = 0;
+
+  @override
+  void dispose() {
+    pickupController.dispose();
+    dropoffController.dispose();
+    notesController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(title: const Text('Trip planning')),
-      body: ListView(
-        padding: const EdgeInsets.all(20),
+      body: Column(
         children: [
-          GlassCard(
-            child: Column(
-              children: const [
-                TextField(decoration: InputDecoration(labelText: 'Pickup')),
-                SizedBox(height: 12),
-                TextField(decoration: InputDecoration(labelText: 'Dropoff')),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(20),
+              children: [
+                GlassCard(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: const [
+                          Expanded(
+                            child: Text('Where should NexRide pick you up?',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 16)),
+                          ),
+                          AIInfoButton(),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      TextField(
+                        controller: pickupController,
+                        decoration: const InputDecoration(labelText: 'Pickup'),
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: dropoffController,
+                        decoration: const InputDecoration(labelText: 'Dropoff'),
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: notesController,
+                        decoration: const InputDecoration(
+                            labelText: 'Notes to driver (optional)'),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(32),
+                  child: Stack(
+                    children: [
+                      Image.network(
+                        'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80',
+                        height: 220,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ).animate().fadeIn(),
+                      Positioned(
+                        top: 20,
+                        right: 20,
+                        child: GlassCard(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 8),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.directions_car, size: 16),
+                              SizedBox(width: 6),
+                              Text('Static preview map'),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text('Departure window', style: theme.textTheme.titleMedium),
+                const SizedBox(height: 12),
+                Wrap(
+                  spacing: 8,
+                  children: List.generate(
+                    slots.length,
+                    (index) => ChoiceChip(
+                      label: Text(slots[index]),
+                      selected: selectedSlot == index,
+                      onSelected: (_) => setState(() => selectedSlot = index),
+                    ),
+                  ),
+                ).animate().fadeIn(),
+                const SizedBox(height: 20),
+                Text('AI cues', style: theme.textTheme.titleMedium),
+                const SizedBox(height: 12),
+                SizedBox(
+                  height: 120,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _aiCards.length,
+                    itemBuilder: (context, index) {
+                      final card = _aiCards[index];
+                      final selected = selectedCard == index;
+                      return GestureDetector(
+                        onTap: () => setState(() => selectedCard = index),
+                        child: GlassCard(
+                          margin: EdgeInsets.only(right: index == _aiCards.length - 1 ? 0 : 12),
+                          padding: const EdgeInsets.all(16),
+                          child: SizedBox(
+                            width: 200,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(card.icon,
+                                    color: selected
+                                        ? theme.colorScheme.primary
+                                        : Colors.white70),
+                                const SizedBox(height: 12),
+                                Text(card.title,
+                                    style: theme.textTheme.titleSmall
+                                        ?.copyWith(fontWeight: FontWeight.bold)),
+                                const SizedBox(height: 6),
+                                Text(card.subtitle,
+                                    style: theme.textTheme.bodySmall),
+                              ],
+                            ),
+                          ),
+                        )
+                            .animate()
+                            .slideX(begin: 0.1 * index)
+                            .scale(begin: selected ? 1.02 : 1.0),
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),
-          const SizedBox(height: 20),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(32),
-            child: Image.network(
-              'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80',
+          Container(
+            decoration: BoxDecoration(
+              color: theme.scaffoldBackgroundColor.withOpacity(0.95),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+              boxShadow: const [
+                BoxShadow(blurRadius: 32, color: Colors.black26),
+              ],
+            ),
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: const [
+                    Icon(Icons.attach_money_rounded),
+                    SizedBox(width: 8),
+                    Text('Estimated 34 credits · 24 km'),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                PrimaryButton(
+                  label: 'Request car',
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                      title: const Text('Trip requested'),
+                      content: const Text(
+                          'NexRide is simulating your request locally – once AI dispatch goes live, this will connect instantly.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('Okay'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: 20),
-          const AIInfoButton(),
         ],
       ),
     );
   }
 }
+
+class _AiCardData {
+  const _AiCardData(this.title, this.subtitle, this.icon);
+  final String title;
+  final String subtitle;
+  final IconData icon;
+}
+
+const _aiCards = [
+  _AiCardData('Eco ride', 'Car waits + optimises battery usage.', Icons.bolt),
+  _AiCardData('Comfort cabin', 'Lights + playlist for your focus mode.', Icons.music_note),
+  _AiCardData('Shared route', 'Pick a friend midway without detours.', Icons.group_add),
+];

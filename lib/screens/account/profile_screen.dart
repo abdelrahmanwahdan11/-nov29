@@ -1,9 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../controllers/controller_scope.dart';
 import '../../widgets/glass_card.dart';
 import '../../widgets/stat_pill.dart';
+import '../account/achievements_screen.dart';
 import '../account/favorites_screen.dart';
 import '../account/offers_screen.dart';
 import '../account/trips_history_screen.dart';
@@ -29,17 +31,19 @@ class ProfileScreen extends StatelessWidget {
                 CircleAvatar(
                   radius: 36,
                   backgroundImage: NetworkImage(user?.avatarUrl ?? ''),
-                ),
+                ).animate().scale(duration: 400.ms, curve: Curves.easeOutBack),
                 const SizedBox(width: 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(user?.name ?? 'Guest',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge
-                              ?.copyWith(fontWeight: FontWeight.bold)),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(fontWeight: FontWeight.bold))
+                          .animate()
+                          .fadeIn(duration: 350.ms),
                       Text(user?.email ?? 'guest@nexride.ai'),
                     ],
                   ),
@@ -70,6 +74,14 @@ class ProfileScreen extends StatelessWidget {
             icon: Icons.history,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const TripsHistoryScreen()),
+            ),
+          ),
+          _ProfileTile(
+            title: 'Achievements',
+            subtitle: 'Earn glass badges & streak boosts',
+            icon: Icons.emoji_events_outlined,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const AchievementsScreen()),
             ),
           ),
           _ProfileTile(

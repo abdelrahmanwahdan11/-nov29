@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:nex_ride_ai_mobility/data/models/achievement.dart';
 import 'package:nex_ride_ai_mobility/data/models/playlist_track.dart';
 import 'package:nex_ride_ai_mobility/data/models/trip.dart';
 import 'package:nex_ride_ai_mobility/data/models/user.dart';
@@ -192,5 +194,35 @@ final playlist = <PlaylistTrack>[
     durationSec: 204,
     coverImageUrl:
         'https://images.unsplash.com/photo-1469478715127-7c631389bc21?auto=format&fit=crop&w=400&q=80',
+  ),
+];
+
+final achievements = <Achievement>[
+  Achievement(
+    id: 'ach-1',
+    title: 'City Explorer',
+    description: 'Complete rides across five unique districts in one week.',
+    progress: 0.7,
+    badgeImageUrl:
+        'https://images.unsplash.com/photo-1511396275275-4f55b04b0d5b?auto=format&fit=crop&w=300&q=80',
+    accent: const Color(0xFF47E7FF),
+  ),
+  Achievement(
+    id: 'ach-2',
+    title: 'Eco Hero',
+    description: 'Choose only electric vehicles for three consecutive trips.',
+    progress: 0.45,
+    badgeImageUrl:
+        'https://images.unsplash.com/photo-1449960238630-7e720e630019?auto=format&fit=crop&w=300&q=80',
+    accent: const Color(0xFF22C55E),
+  ),
+  Achievement(
+    id: 'ach-3',
+    title: 'Night Owl',
+    description: 'Request late-night pickups more than four times this month.',
+    progress: 0.9,
+    badgeImageUrl:
+        'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&w=300&q=80',
+    accent: const Color(0xFFFF6FD8),
   ),
 ];

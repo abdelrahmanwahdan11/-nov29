@@ -49,6 +49,7 @@ class _NexRideAppState extends State<NexRideApp> {
       auth.load(),
       theme.load(),
       localization.load(),
+      trip.bootstrapHistory(),
     ]);
     trip.startSimulation();
     setState(() => initialized = true);

@@ -106,6 +106,66 @@ final trips = <Trip>[
     mapImageUrl:
         'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1200&q=80',
   ),
+  Trip(
+    id: 'trip-3',
+    status: 'completed',
+    vehicleId: 'veh-2',
+    pickupLocation: 'Design District',
+    dropoffLocation: 'South Beach',
+    scheduledTime: DateTime.now().subtract(const Duration(days: 3)),
+    startTime: DateTime.now().subtract(const Duration(days: 3, hours: -2)),
+    endTime: DateTime.now().subtract(const Duration(days: 3, hours: -1, minutes: -10)),
+    price: 54.60,
+    distanceKm: 32.0,
+    shareLink: 'https://nexride.ai/share/trip-3',
+    mapImageUrl:
+        'https://images.unsplash.com/photo-1469478715127-7c631389bc21?auto=format&fit=crop&w=1200&q=80',
+  ),
+  Trip(
+    id: 'trip-4',
+    status: 'cancelled',
+    vehicleId: 'veh-1',
+    pickupLocation: 'Wynwood Hub',
+    dropoffLocation: 'University Village',
+    scheduledTime: DateTime.now().subtract(const Duration(days: 5)),
+    startTime: DateTime.now().subtract(const Duration(days: 5)),
+    endTime: DateTime.now().subtract(const Duration(days: 5)),
+    price: 0,
+    distanceKm: 0,
+    shareLink: 'https://nexride.ai/share/trip-4',
+    mapImageUrl:
+        'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80',
+  ),
+  Trip(
+    id: 'trip-5',
+    status: 'completed',
+    vehicleId: 'veh-3',
+    pickupLocation: 'Coral Gables',
+    dropoffLocation: 'Key Biscayne',
+    scheduledTime: DateTime.now().subtract(const Duration(days: 7)),
+    startTime: DateTime.now().subtract(const Duration(days: 7, hours: -3)),
+    endTime: DateTime.now().subtract(const Duration(days: 7, hours: -2, minutes: -40)),
+    price: 65.10,
+    distanceKm: 41.2,
+    shareLink: 'https://nexride.ai/share/trip-5',
+    mapImageUrl:
+        'https://images.unsplash.com/photo-1500534314215-6c8c8e9c90f4?auto=format&fit=crop&w=1200&q=80',
+  ),
+  Trip(
+    id: 'trip-6',
+    status: 'completed',
+    vehicleId: 'veh-2',
+    pickupLocation: 'Edgewater',
+    dropoffLocation: 'SeaPort Village',
+    scheduledTime: DateTime.now().subtract(const Duration(days: 10)),
+    startTime: DateTime.now().subtract(const Duration(days: 10, hours: -1)),
+    endTime: DateTime.now().subtract(const Duration(days: 10, hours: -1, minutes: -25)),
+    price: 35.80,
+    distanceKm: 21.6,
+    shareLink: 'https://nexride.ai/share/trip-6',
+    mapImageUrl:
+        'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80',
+  ),
 ];
 
 final playlist = <PlaylistTrack>[

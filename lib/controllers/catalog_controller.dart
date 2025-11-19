@@ -12,6 +12,9 @@ class CatalogController extends ChangeNotifier {
   List<Vehicle> get compareList => List.unmodifiable(_compare);
   String query = '';
   String category = 'All';
+  double? maxPrice;
+  int? minSeats;
+  String sort = 'Recommended';
   bool isLoading = false;
   bool isPaginating = false;
   int _page = 0;
@@ -61,6 +64,31 @@ class CatalogController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateQuery(String value) {
+    query = value;
+    notifyListeners();
+  }
+
+  void updateCategory(String value) {
+    category = value;
+    notifyListeners();
+  }
+
+  void updateMaxPrice(double? value) {
+    maxPrice = value;
+    notifyListeners();
+  }
+
+  void updateMinSeats(int? value) {
+    minSeats = value;
+    notifyListeners();
+  }
+
+  void updateSort(String value) {
+    sort = value;
+    notifyListeners();
+  }
+
   List<Vehicle> filteredItems() {
     Iterable<Vehicle> view = _items;
     if (query.isNotEmpty) {
@@ -72,6 +100,26 @@ class CatalogController extends ChangeNotifier {
       view = view.where(
           (v) => v.category.toLowerCase() == category.toLowerCase());
     }
-    return view.toList();
+    if (maxPrice != null) {
+      view = view.where((v) => v.basePrice <= maxPrice!);
+    }
+    if (minSeats != null) {
+      view = view.where((v) => v.seats >= minSeats!);
+    }
+    final sorted = view.toList();
+    switch (sort) {
+      case 'Price':
+        sorted.sort((a, b) => a.basePrice.compareTo(b.basePrice));
+        break;
+      case 'Range':
+        sorted.sort((a, b) => b.rangeKm.compareTo(a.rangeKm));
+        break;
+      case 'Rating':
+        sorted.sort((a, b) => b.rating.compareTo(a.rating));
+        break;
+      default:
+        break;
+    }
+    return sorted;
   }
 }

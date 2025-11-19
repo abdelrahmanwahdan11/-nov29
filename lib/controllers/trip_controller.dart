@@ -12,6 +12,83 @@ class TripController extends ChangeNotifier {
   final ValueNotifier<String> statusNotifier =
       ValueNotifier<String>(trips.first.status);
 
+  final List<Trip> _historySource =
+      List<Trip>.from(trips)..sort((a, b) => b.startTime.compareTo(a.startTime));
+  final List<Trip> _visibleHistory = [];
+  bool historyLoading = false;
+  bool historyPaginating = false;
+  String historyFilter = 'All';
+  String historyQuery = '';
+  int _historyPage = 0;
+  static const int _historyPageSize = 3;
+
+  List<Trip> get historyItems {
+    Iterable<Trip> data = _visibleHistory;
+    if (historyFilter != 'All') {
+      data = data.where((trip) =>
+          trip.status.toLowerCase() == historyFilter.toLowerCase());
+    }
+    if (historyQuery.isNotEmpty) {
+      final lower = historyQuery.toLowerCase();
+      data = data.where((trip) => trip.pickupLocation.toLowerCase().contains(lower) ||
+          trip.dropoffLocation.toLowerCase().contains(lower));
+    }
+    return data.toList();
+  }
+
+  bool get canLoadMoreHistory =>
+      _visibleHistory.length < _historySource.length && !historyPaginating;
+
+  Future<void> bootstrapHistory() async {
+    await _loadHistory(reset: true);
+  }
+
+  Future<void> refreshHistory() async {
+    await _loadHistory(reset: true, simulateDelay: true);
+  }
+
+  Future<void> loadMoreHistory() async {
+    await _loadHistory();
+  }
+
+  Future<void> _loadHistory({bool reset = false, bool simulateDelay = false}) async {
+    if (reset) {
+      historyLoading = true;
+      historyPaginating = false;
+      notifyListeners();
+      if (simulateDelay) {
+        await Future<void>.delayed(const Duration(milliseconds: 650));
+      }
+      _historyPage = 1;
+      _visibleHistory
+        ..clear()
+        ..addAll(_historySource.take(_historyPageSize));
+      historyLoading = false;
+      notifyListeners();
+      return;
+    }
+    if (!canLoadMoreHistory) return;
+    historyPaginating = true;
+    notifyListeners();
+    await Future<void>.delayed(const Duration(milliseconds: 600));
+    _historyPage += 1;
+    final start = (_historyPage - 1) * _historyPageSize;
+    final next = _historySource.skip(start).take(_historyPageSize);
+    _visibleHistory.addAll(next);
+    historyPaginating = false;
+    notifyListeners();
+  }
+
+  void updateHistoryFilter(String filter) {
+    historyFilter = filter;
+    notifyListeners();
+  }
+
+  void updateHistoryQuery(String query) {
+    historyQuery = query;
+    notifyListeners();
+  }
+
   void startSimulation() {
     _timer?.cancel();
     final states = [

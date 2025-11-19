@@ -4,11 +4,13 @@ import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../widgets/glass_card.dart';
 import '../music/music_experience_screen.dart';
+import '../more/cabin_modes_screen.dart';
 import '../more/city_pulse_screen.dart';
 import '../more/community_challenges_screen.dart';
 import '../more/eco_insights_screen.dart';
 import '../more/journey_moments_screen.dart';
 import '../more/labs_screen.dart';
+import '../more/pulse_forecast_screen.dart';
 import '../more/route_insights_screen.dart';
 import '../more/safety_tips_screen.dart';
 import '../more/settings_screen.dart';
@@ -33,6 +35,12 @@ class MoreScreen extends StatelessWidget {
         builder: (_) => const EcoInsightsScreen(),
       ),
       _MoreTile(
+        title: 'Pulse forecasts',
+        subtitle: 'Micro windows to dodge congestion',
+        icon: Icons.auto_awesome_mosaic,
+        builder: (_) => const PulseForecastScreen(),
+      ),
+      _MoreTile(
         title: 'Nex Labs',
         subtitle: 'Preview future AI upgrades & waitlists',
         icon: Icons.auto_graph_rounded,
@@ -43,6 +51,12 @@ class MoreScreen extends StatelessWidget {
         subtitle: 'Replay cinematic ride stories & glass stats',
         icon: Icons.movie_filter_outlined,
         builder: (_) => const JourneyMomentsScreen(),
+      ),
+      _MoreTile(
+        title: 'Cabin mood studio',
+        subtitle: 'Curate lights, playlists & rituals',
+        icon: Icons.nightlight_round,
+        builder: (_) => const CabinModesScreen(),
       ),
       _MoreTile(
         title: 'Route insights',

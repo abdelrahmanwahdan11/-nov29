@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:nex_ride_ai_mobility/data/models/achievement.dart';
+import 'package:nex_ride_ai_mobility/data/models/cabin_mood.dart';
 import 'package:nex_ride_ai_mobility/data/models/city_pulse_story.dart';
 import 'package:nex_ride_ai_mobility/data/models/community_challenge.dart';
+import 'package:nex_ride_ai_mobility/data/models/eco_reward.dart';
 import 'package:nex_ride_ai_mobility/data/models/journey_moment.dart';
 import 'package:nex_ride_ai_mobility/data/models/playlist_track.dart';
+import 'package:nex_ride_ai_mobility/data/models/pulse_forecast.dart';
 import 'package:nex_ride_ai_mobility/data/models/route_insight.dart';
 import 'package:nex_ride_ai_mobility/data/models/trip.dart';
 import 'package:nex_ride_ai_mobility/data/models/user.dart';
 import 'package:nex_ride_ai_mobility/data/models/vehicle.dart';
 import 'package:nex_ride_ai_mobility/data/models/wellness_metric.dart';
-import 'package:nex_ride_ai_mobility/data/models/eco_reward.dart';
 
 final demoUser = User(
   id: 'user-1',
@@ -451,5 +453,104 @@ final routeInsights = <RouteInsight>[
     mapImageUrl:
         'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80',
     tags: const ['Scenic', 'Bonus points'],
+  ),
+];
+
+final cabinMoods = <CabinMood>[
+  CabinMood(
+    id: 'mood-focus',
+    title: 'Focus capsule',
+    subtitle: 'Noise cancelled, blue glass glow',
+    description:
+        'The cabin filters chatter, drops the cabin temperature slightly, and syncs a lo-fi playlist so you can finish slides en route.',
+    imageUrl:
+        'https://images.unsplash.com/photo-1511396275275-4f55b04b0d5b?auto=format&fit=crop&w=1200&q=80',
+    gradient: const [Color(0xFF2F6BFF), Color(0xFF47E7FF)],
+    badge: 'Deep work mode',
+    focusScore: 0.92,
+    energyScore: 0.45,
+    rituals: const [
+      'Blue haze lighting',
+      'Adaptive seat incline',
+      'Inbox zero nudges',
+    ],
+  ),
+  CabinMood(
+    id: 'mood-reset',
+    title: 'Reset ritual',
+    subtitle: 'Warm sunrise gradient',
+    description:
+        'Great after late events. Aromatherapy mist plus guided breathing pulses calm the cabin within two minutes.',
+    imageUrl:
+        'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&w=1200&q=80',
+    gradient: const [Color(0xFFFF6FD8), Color(0xFFFFA14E)],
+    badge: 'Calm streak +1',
+    focusScore: 0.55,
+    energyScore: 0.78,
+    rituals: const [
+      'Sunrise wash lighting',
+      'Guided breath cues',
+      'Calm tea reminder',
+    ],
+  ),
+  CabinMood(
+    id: 'mood-celebrate',
+    title: 'Celebrate loop',
+    subtitle: 'Neon ribbons + bass boost',
+    description:
+        'Sync playlists with friends, let AI choreograph the cabin beams, and capture highlight clips for Journey Moments.',
+    imageUrl:
+        'https://images.unsplash.com/photo-1500534314215-6c8c8e9c90f4?auto=format&fit=crop&w=1200&q=80',
+    gradient: const [Color(0xFF7B61FF), Color(0xFF47E7FF)],
+    badge: 'Crew vibes',
+    focusScore: 0.32,
+    energyScore: 0.94,
+    rituals: const [
+      'Shared playlist sync',
+      'Panoramic photo cues',
+      'Confetti lighting finale',
+    ],
+  ),
+];
+
+final pulseForecasts = <PulseForecast>[
+  const PulseForecast(
+    id: 'pf-1',
+    title: 'Harbor breeze surge',
+    summary:
+        'Sensors detect a light crosswind at the marina. Expect smoother EV drifts but +3 min staging.',
+    mapImageUrl:
+        'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1200&q=80',
+    timeframe: 'Next 20 min',
+    impactLevel: 'Mild delay',
+    tags: const ['Waterfront', 'Eco bonus'],
+    delayMinutes: 3,
+    confidence: 0.86,
+  ),
+  const PulseForecast(
+    id: 'pf-2',
+    title: 'Stadium exit wave',
+    summary:
+        'Concert crowd releases at 22:15. AI suggests sliding pickups 12 min to skip the surge.',
+    mapImageUrl:
+        'https://images.unsplash.com/photo-1469478715127-7c631389bc21?auto=format&fit=crop&w=1200&q=80',
+    timeframe: 'Tonight 22:00',
+    impactLevel: 'Heavy congestion',
+    tags: const ['Event', 'Night'],
+    delayMinutes: 12,
+    confidence: 0.74,
+  ),
+  const PulseForecast(
+    id: 'pf-3',
+    title: 'Causeway cooling window',
+    summary:
+        'Ocean mist lowers temps along the causeway. Batteries stay happy; unlock +5% range.',
+    mapImageUrl:
+        'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80',
+    timeframe: 'Tomorrow 05:30',
+    impactLevel: 'Advantage',
+    tags: const ['Early', 'Range'],
+    delayMinutes: -5,
+    confidence: 0.9,
   ),
 ];

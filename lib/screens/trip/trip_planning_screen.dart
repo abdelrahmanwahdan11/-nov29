@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
+import '../../data/mock/mock_data.dart';
 import '../../widgets/ai_info_button.dart';
 import '../../widgets/glass_card.dart';
 import '../../widgets/primary_button.dart';
+import '../more/route_insights_screen.dart';
 
 class TripPlanningScreen extends StatefulWidget {
   const TripPlanningScreen({super.key});
@@ -159,6 +161,69 @@ class _TripPlanningScreenState extends State<TripPlanningScreen> {
                     },
                   ),
                 ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Pulse forecasts',
+                        style: theme.textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold)),
+                    TextButton(
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (_) => const RouteInsightsScreen()),
+                      ),
+                      child: const Text('View more'),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 12),
+                ...pulseForecasts.take(2).map((forecast) {
+                  return GlassCard(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                forecast.title,
+                                style: theme.textTheme.titleMedium
+                                    ?.copyWith(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Text(forecast.timeframe),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        Text(forecast.summary),
+                        const SizedBox(height: 12),
+                        Row(
+                          children: [
+                            Icon(Icons.route, size: 18, color: theme.colorScheme.primary),
+                            const SizedBox(width: 8),
+                            Text('${forecast.delayMinutes >= 0 ? '+' : ''}${forecast.delayMinutes} min'),
+                            const Spacer(),
+                            Text('${(forecast.confidence * 100).round()}% conf.',
+                                style: theme.textTheme.labelMedium),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8,
+                          children: [
+                            for (final tag in forecast.tags)
+                              Chip(label: Text(tag))
+                                  .animate()
+                                  .scale(duration: 200.ms, curve: Curves.easeOut),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ).animate().fadeIn().slideY(begin: 0.1);
+                }).toList(),
               ],
             ),
           ),

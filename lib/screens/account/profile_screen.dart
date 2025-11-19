@@ -12,8 +12,10 @@ import '../account/offers_screen.dart';
 import '../account/trips_history_screen.dart';
 import '../account/wallet_screen.dart';
 import '../account/wellness_screen.dart';
+import '../more/cabin_modes_screen.dart';
 import '../more/community_challenges_screen.dart';
 import '../more/journey_moments_screen.dart';
+import '../more/pulse_forecast_screen.dart';
 import '../more/settings_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -97,12 +99,28 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
           _ProfileTile(
+            title: 'Cabin mood studio',
+            subtitle: 'Tune lighting, rituals & playlists',
+            icon: Icons.nightlight_round,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const CabinModesScreen()),
+            ),
+          ),
+          _ProfileTile(
             title: 'Community challenges',
             subtitle: 'Crew missions & shared rewards',
             icon: Icons.groups_3_rounded,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(
                   builder: (_) => const CommunityChallengesScreen()),
+            ),
+          ),
+          _ProfileTile(
+            title: 'Pulse forecasts',
+            subtitle: 'Upcoming waves & advantage windows',
+            icon: Icons.auto_awesome_mosaic,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const PulseForecastScreen()),
             ),
           ),
           _ProfileTile(

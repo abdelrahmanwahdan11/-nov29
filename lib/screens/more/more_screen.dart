@@ -9,6 +9,7 @@ import '../more/community_challenges_screen.dart';
 import '../more/eco_insights_screen.dart';
 import '../more/journey_moments_screen.dart';
 import '../more/labs_screen.dart';
+import '../more/route_insights_screen.dart';
 import '../more/safety_tips_screen.dart';
 import '../more/settings_screen.dart';
 import '../more/support_screen.dart';
@@ -42,6 +43,12 @@ class MoreScreen extends StatelessWidget {
         subtitle: 'Replay cinematic ride stories & glass stats',
         icon: Icons.movie_filter_outlined,
         builder: (_) => const JourneyMomentsScreen(),
+      ),
+      _MoreTile(
+        title: 'Route insights',
+        subtitle: 'Optimal windows & eco suggestions',
+        icon: Icons.route,
+        builder: (_) => const RouteInsightsScreen(),
       ),
       _MoreTile(
         title: 'City pulse',

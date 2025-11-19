@@ -7,6 +7,7 @@ import '../../widgets/glass_card.dart';
 import '../../widgets/stat_pill.dart';
 import '../account/achievements_screen.dart';
 import '../account/favorites_screen.dart';
+import '../account/loyalty_rewards_screen.dart';
 import '../account/offers_screen.dart';
 import '../account/trips_history_screen.dart';
 import '../account/wallet_screen.dart';
@@ -126,6 +127,14 @@ class ProfileScreen extends StatelessWidget {
             icon: Icons.local_activity_outlined,
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const OffersScreen()),
+            ),
+          ),
+          _ProfileTile(
+            title: 'Loyalty tiers',
+            subtitle: 'Glow miles & crew perks',
+            icon: Icons.auto_awesome,
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const LoyaltyRewardsScreen()),
             ),
           ),
           _ProfileTile(

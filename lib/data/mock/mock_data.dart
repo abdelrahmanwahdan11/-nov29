@@ -4,10 +4,12 @@ import 'package:nex_ride_ai_mobility/data/models/city_pulse_story.dart';
 import 'package:nex_ride_ai_mobility/data/models/community_challenge.dart';
 import 'package:nex_ride_ai_mobility/data/models/journey_moment.dart';
 import 'package:nex_ride_ai_mobility/data/models/playlist_track.dart';
+import 'package:nex_ride_ai_mobility/data/models/route_insight.dart';
 import 'package:nex_ride_ai_mobility/data/models/trip.dart';
 import 'package:nex_ride_ai_mobility/data/models/user.dart';
 import 'package:nex_ride_ai_mobility/data/models/vehicle.dart';
 import 'package:nex_ride_ai_mobility/data/models/wellness_metric.dart';
+import 'package:nex_ride_ai_mobility/data/models/eco_reward.dart';
 
 final demoUser = User(
   id: 'user-1',
@@ -368,5 +370,86 @@ final communityChallenges = <CommunityChallenge>[
     target: 3,
     reward: 'Priority dispatch next Friday',
     tagline: 'Invite trusted contacts for bonus points.',
+  ),
+];
+
+final ecoRewards = <EcoReward>[
+  EcoReward(
+    id: 'eco-1',
+    title: 'Aurora tier',
+    description: 'Maintain all-electric rides for 10 consecutive days.',
+    progress: 0.6,
+    streak: 6,
+    reward: '+600 glow miles',
+    imageUrl:
+        'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&w=900&q=80',
+    accent: const Color(0xFF47E7FF),
+  ),
+  EcoReward(
+    id: 'eco-2',
+    title: 'Gravity tier',
+    description: 'Refer three teammates to a shared commute pod.',
+    progress: 0.35,
+    streak: 2,
+    reward: 'Crew capsule unlock',
+    imageUrl:
+        'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=900&q=80',
+    accent: const Color(0xFFFF6FD8),
+  ),
+  EcoReward(
+    id: 'eco-3',
+    title: 'Nebula tier',
+    description: 'Offset 120km via community challenges this month.',
+    progress: 0.8,
+    streak: 4,
+    reward: 'Priority dispatch weekend',
+    imageUrl:
+        'https://images.unsplash.com/photo-1469478715127-7c631389bc21?auto=format&fit=crop&w=900&q=80',
+    accent: const Color(0xFF22C55E),
+  ),
+];
+
+final routeInsights = <RouteInsight>[
+  RouteInsight(
+    id: 'insight-1',
+    routeName: 'Harbor Airflow',
+    pickup: 'Downtown HQ',
+    dropoff: 'Seaplane pier',
+    recommendedWindow: '06:40 - 07:10',
+    congestionLevel: 'Low turbulence',
+    co2Saved: '4.3kg saved',
+    description:
+        'Morning sea breeze keeps traffic light. AI suggests enabling Chill cabin preset for sunrise glare reduction.',
+    mapImageUrl:
+        'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80',
+    tags: const ['Sunrise', 'Eco bonus'],
+  ),
+  RouteInsight(
+    id: 'insight-2',
+    routeName: 'Tech Loop',
+    pickup: 'Brickell City',
+    dropoff: 'Innovation Pier',
+    recommendedWindow: '11:20 - 12:05',
+    congestionLevel: 'Moderate',
+    co2Saved: '2.1kg saved',
+    description:
+        'Sensors predict a micro-rain burst. Switch to Adaptive canopy mode and queue a productivity soundscape.',
+    mapImageUrl:
+        'https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=1200&q=80',
+    tags: const ['Focus', 'Weather'],
+  ),
+  RouteInsight(
+    id: 'insight-3',
+    routeName: 'Sunset Drift',
+    pickup: 'Design District',
+    dropoff: 'Key Biscayne',
+    recommendedWindow: '18:10 - 18:45',
+    congestionLevel: 'High but stable',
+    co2Saved: '5.8kg saved',
+    description:
+        'AR beacons reroute you along the baywalk for skyline views. Expect 6 extra minutes but earn double aura points.',
+    mapImageUrl:
+        'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80',
+    tags: const ['Scenic', 'Bonus points'],
   ),
 ];
